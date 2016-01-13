@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "Cesta";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<h4>Minha Cesta de Compras</h4>
+<hr />
+
+@using Projeto.Web.Models.ModelCesta
+
+@{
+    CestaCompras c = null;
+    if (Session["cesta"] != null)
+    {
+        c = (CestaCompras)Session["cesta"];
+
+        <p>
+            Total de Cesta: @String.Format("{0:c}", c.ValorTotal)
+        </p>
+    
+    
+    
+    
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Nome do Produto</th>
+                    <th>Preço</th>
+                    <th>Quantidade</th>
+                    <th>Total</th>
+                    <th>Operações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var i in c.ItensCesta)
+                {
+                    <tr>
+                        <td><img src="/Images/@i.Foto" width="50" height="50" /> </td>
+                        <td>@i.Nome</td>
+                        <td>@i.Preco</td>
+                        <td>@i.Quantidade</td>
+                        <td>@i.ValorTotal</td>
+                        <td>
+                            @Html.ActionLink("+", "AumentarQuantidade",
+                         new { id = i.IdProduto },
+                         new {@class = "btn btn-primary btn-sm" })
+                       
+             
+                            @Html.ActionLink("-", "DiminuirQuantidade",
+                         new { id = i.IdProduto },
+                         new { @class = "btn btn-warning btn-sm" })
+                       
+                            @Html.ActionLink("Remover", "RemoverItem",
+                         new { id = i.IdProduto },
+                         new { @class = "btn btn-danger btn-sm" })
+                        </td>
+
+
+                    </tr>
+                }
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td colspan="6">Quantidade de itens: @c.qtdItens</td>
+                </tr>
+            </tfoot>
+        </table>
+    }
+    else
+    {
+        <strong>Não há produtos em sua cesta de compras</strong>
+    }
+}
+
+
+

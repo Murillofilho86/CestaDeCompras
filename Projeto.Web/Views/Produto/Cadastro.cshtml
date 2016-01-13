@@ -1,0 +1,54 @@
+﻿@model Projeto.Web.Models.ProdutoViewModelCadastro
+
+@{
+    ViewBag.Title = "Cadastro";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("CadastrarProduto", "Produto", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+   
+    
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Cadastro de Novo Produto</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nome, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nome)
+                @Html.ValidationMessageFor(model => model.Nome)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Preco, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Preco)
+                @Html.ValidationMessageFor(model => model.Preco)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Preco, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="Foto"/>
+               @Html.ValidationMessageFor(model => model.Foto)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Cadastrar Produto" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+   @ViewBag.Mensagem
+</div>
